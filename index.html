@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Math Challenge</title>
+    <style>
+        /* Cover layout styling */
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #222; font-family: sans-serif; color: #fff; }
+        
+        /* Interactive Circle Foreground Canvas Workspace */
+        #game-canvas-container { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; }
+        canvas { background: #111; border: 2px dashed #444; border-radius: 50%; cursor: crosshair; }
+        
+        /* Secret Central Navigation Portal (Hidden by default) */
+        #hidden-portal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #121212; color: #fff; z-index: 9999; padding-top: 15vh; text-align: center; }
+        
+        .menu-container { max-width: 600px; margin: 40px auto; display: flex; flex-direction: column; gap: 20px; }
+        
+        .menu-link { 
+            background: #1e1e1e; 
+            border: 2px solid #333; 
+            border-radius: 8px; 
+            padding: 20px; 
+            color: #00ffcc; 
+            text-decoration: none; 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            transition: 0.2s; 
+        }
+        .menu-link:hover { border-color: #00ffcc; background: #1a3a35; transform: scale(1.02); }
+        .hint-text { color: #888; font-size: 0.9rem; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+    <!-- Circle Drawing Utility Mask Area -->
+    <div id="game-canvas-container">
+        <h2>Perfect Circle Drawing Simulator</h2>
+        <p>Test your wrist stability. Draw a circle inside the boundary loop!</p>
+        <canvas id="circleCanvas" width="400" height="400"></canvas>
+        <p id="score-output" style="font-size: 1.2rem; color: #00ffcc; margin-top: 15px;">Accuracy: Waiting for trace...</p>
+    </div>
+
+    <!-- Secret Hidden Dashboard Menu Layer -->
+    <div id="hidden-portal">
+        <h1>Private System Index</h1>
+        <p>Press <strong>Escape</strong> instantly to completely hide this panel and lock the station.</p>
+        
+        <div class="menu-container">
+            <!-- Updated links to point precisely to your custom html filenames -->
+            <a href="game.html" class="menu-link">
+                🕹️ Launch Games Arcade
+                <div class="hint-text">Opens your full collection of uploaded browser games</div>
+            </a>
+            
+            <a href="proxy.html" class="menu-link">
+                🌐 Launch Proxy Router
+                <div class="hint-text">Opens your web unblocker routing interface client</div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. The Circle Utility Core Code ---
+        const canvas = document.getElementById('circleCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+
+        canvas.addEventListener('mousedown', () => { drawing = true; ctx.beginPath(); ctx.strokeStyle = '#00ffcc'; ctx.lineWidth = 3; });
+        window.addEventListener('mouseup', () => { 
+            if(drawing) {
+                drawing = false;
+                document.getElementById('score-output').innerText = "Accuracy: " + (Math.floor(Math.random() * 25) + 65) + "% Match";
+            }
+        });
+        canvas.addEventListener('mousemove', (e) => {
+            if (!drawing) return;
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+        });
+
+        // --- 2. Secret Key Shortcut Interceptor Routine ---
+        const portalMenu = document.getElementById('hidden-portal');
+        window.addEventListener('keydown', function(e) {
+            // Secret Shortcut Trigger: Press Ctrl + Shift + H together
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'h') {
+                e.preventDefault();
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // wipe canvas markings
+                portalMenu.style.display = (portalMenu.style.display === 'block') ? 'none' : 'block';
+            }
+            // Panic Safe Switch: Escape key hides everything instantly
+            if (e.key === 'Escape') {
+                portalMenu.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
